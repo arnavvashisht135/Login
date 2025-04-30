@@ -2,20 +2,23 @@
 #make change password function
 
 def main():
-    print("1. Register")
-    print("2. Login")
-    print("3. Quit")
+    while True:
+        print("1. Register")
+        print("2. Login")
+        print("3. Quit")
 
-    option = int(input("Enter choice: "))
-
-    if option == 1:
-        register()
-    elif option == 2:
-        login()
-    elif option == 3:
-        quit()
-    else:
-        print("Invalid option")
+        try:
+            option = int(input("Enter choice: "))
+            if option == 1:
+                register()
+            elif option == 2:
+                login()
+            elif option == 3:
+                quit()
+            else:
+                print("Invalid option")
+        except ValueError:
+            print("Please enter a valid number.")
 
         main()
 
@@ -36,7 +39,7 @@ def login():
     
     with open("user&pass.txt", "r") as file:
         for line in file:
-            username, password = line.split(",")
+            username, password = line.strip().split(",")
             if name_login == username and password_login == password:
                 print("Logged in!")
                 logged_in()
@@ -57,9 +60,26 @@ def logged_in():
 def quit():
     exit()
 
-main()
+def change_password():
+    name = input("Enter your username: ")
+    old_password = input("Enter your old password: ")
+    new_password = input("Enter your new password: ")
 
-#def change_password():
+    lines = []
+    with open("user&pass.txt", "r") as file:
+        for line in file:
+            username, password = line.strip().split(",")
+            if username == name and password == old_password:
+                lines.append(f"{username},{new_password}\n")
+            else:
+                lines.append(line)
+
+    with open("user&pass.txt", "w") as file:
+        file.writelines(lines)
+
+    print("Password changed successfully!")
+
+main()
 #   with open("user&pass.txt" "w") as file:
 #       for line in file:
 #           new_password = password
