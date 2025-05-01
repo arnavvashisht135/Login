@@ -79,7 +79,5 @@ def change_password():
 
     print("Password changed successfully!")
 
+
 main()
-#   with open("user&pass.txt" "w") as file:
-#       for line in file:
-#           new_password = password
